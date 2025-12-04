@@ -1,6 +1,69 @@
-import { About } from "./pages";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import {
+  HomeLayout,
+  Landing,
+  Error,
+  Products,
+  SingleProduct,
+  Cart,
+  About,
+  Register,
+  Login,
+  Checkout,
+  Orders,
+} from "./pages";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomeLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: "products",
+        element: <Products />,
+      },
+      {
+        path: "products/:id",
+        element: <SingleProduct />,
+      },
+      {
+        path: "Cart",
+        element: <Cart />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "orders",
+        element: <Orders />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+    errorElement: <Error />,
+  },
+]);
+
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
