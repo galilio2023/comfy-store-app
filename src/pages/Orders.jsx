@@ -14,17 +14,18 @@ const ordersQuery = (params, user) => {
       user.username,
       params.page ? parseInt(params.page) : 1,
     ],
-    queryFn:()=>customFetch.get("/orders", {
+    queryFn: () =>
+      customFetch.get("/orders", {
         params,
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
-      });
+      }),
   };
 };
 
 export const loader =
-  (store,queryClient) =>
+  (store, queryClient) =>
   async ({ request }) => {
     const user = store.getState().userState.user;
     if (!user) {
@@ -36,7 +37,9 @@ export const loader =
       ...new URL(request.url).searchParams.entries(),
     ]);
     try {
-      const response = await queryClient.ensureQueryData(ordersQuery(params,user));
+      const response = await queryClient.ensureQueryData(
+        ordersQuery(params, user)
+      );
 
       return { orders: response.data.data, meta: response.data.meta };
     } catch (error) {
